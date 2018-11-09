@@ -12,11 +12,11 @@ Would be equivalent to
     foo.b = ""
     foo.a()
 
-Or more accurately (to provent `foo` from being referenced multiple types)
+Or more accurately (to prevent `foo` from being referenced multiple times)
 
-    (function (t) {
-        t.b = ""
-        t.a()
+    (obj => {
+        obj.b = ""
+        obj.a()
     })(foo)
 
 ## Babel implementation
