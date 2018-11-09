@@ -19,6 +19,11 @@ Or more accurately (to provent `foo` from being referenced multiple types)
         t.a()
     })(foo)
 
+## Babel implementation
+
+Here is a[ fork of babel](https://github.com/RedHatter/babel/tree/proposal-cascade-operator) with the cascade operator implemented. Note: The changes are on the `proposal-cascade-operator` branch.
+
+Enable the plugin with `{ plugins: [ "@babel/plugin-proposal-cascade-operator" ] }`.
 
 ## Overview and motivation
 The cascades operator `..` allows you to make a sequence of operations on the same object which can dramatically reduce boilerplate. The operator implicitly discards the result and evaluates to the callee. This allows most APIs to be used in a fluent manner without having been explicitly designed for it.
