@@ -1,22 +1,22 @@
 # Cascade operator proposal — native fluent interfaces
-The cascades operator `..` allows you to make a sequence of operations on the same object which can dramatically reduce boilerplate. The operator implicitly discards the result and evaluates to the callee.
+The cascades operator `..` allows you to make a sequence of operations on the same object which can dramatically reduce boilerplate. The operator continues execution until the next cascade or the end of the statement then implicitly discards the result and evaluates to the callee.
 
 This simplistic example
 
     foo
-        ..b = ""
-        ..a()
+        ..a.b = c
+        ..d()
 
 Would be equivalent to
 
-    foo.b = ""
-    foo.a()
+    foo.a.b = c
+    foo.d()
 
 Or more accurately (to prevent `foo` from being referenced multiple times)
 
     (obj => {
-        obj.b = ""
-        obj.a()
+        obj.a.b = c
+        obj.d()
     })(foo)
 
 ## Babel implementation
@@ -26,15 +26,16 @@ Here is a[ fork of babel](https://github.com/RedHatter/babel/tree/proposal-casca
 Enable the plugin with `{ plugins: [ "@babel/plugin-proposal-cascade-operator" ] }`.
 
 ## Overview and motivation
-The cascades operator `..` allows you to make a sequence of operations on the same object which can dramatically reduce boilerplate. The operator implicitly discards the result and evaluates to the callee. This allows most APIs to be used in a fluent manner without having been explicitly designed for it.
 
-Due to the lack of language support, libraries such as jQuery have to use method chaining to implement a fluent interface and approximate cascading — this severely limits the API design by requiring methods instead of properties and requiring artificially flat class hierarchies.
+Due to the lack of language support, libraries that desire to provide a fluent interface, such as jQuery, use method chaining to approximate cascading — this severely limits the API design by requiring methods instead of properties and requiring artificially flat class hierarchies.
+
+The method chaining pattern has become more and more widespread since jQuery popularized it. It's quite clearly a pattern that many programmers want to use. Adding support for cascading at the language level gives the choice of whether or not to use a fluent interface pattern to the programmer. Library designers wouldn't be forced into deciding between providing a fluent interface and making concessions or providing a more classic API. It would open the design space allowing a fluent interface to be used when it makes sense and a more classic approach when it doesn't.
 
 ### DOM manipulation
 
 DOM manipulation is one area where the benefit of fluent interfaces can easily be seen.
 
-Lets start with a simple example using standard methods.
+Let's start with a simple example using standard methods.
 
     let node = document.querySelector("div#container")
     node.style.backgroundColor = "blue"
@@ -42,7 +43,7 @@ Lets start with a simple example using standard methods.
     node.addEventListener("click", e => {})
     let a = document.createElement("a")
     a.setAttribute("href", "http://example.com")
-    a.text = "Example"
+    a.textContent = "Example"
     node.appendChild(a)
 
 The same block of code written with a fluent interface is both more concise and more expressive. Here it is again written with jQuery's chaining approach. Notice how it doesn't require superfluous variables.
@@ -57,7 +58,7 @@ The same block of code written with a fluent interface is both more concise and 
                 .text("Example")
         )
 
-This approach comes at a cost. We lose the `style` and `classList` sub-objects and are forced to use methods instead of fields. Chaining APIs can quickly grow needlessly complex and become hard to reason about with additional methods required to navigate the statement stack. In addition chained APIs are often force to behave in unintuitive ways to maintain the requirement of always returning the caller.
+This approach comes at a cost. We lose the `style` and `classList` sub-objects and are forced to use methods instead of fields. Chaining APIs can quickly grow needlessly complex and become hard to reason about, with additional methods required to navigate the statement stack. In addition, chained APIs are often forced to behave in unintuitive ways to maintain the requirement of always returning the caller.
 
 The cascading operator gives us the benefits of a fluent interface without the concessions of method chaining. The interface can be used and designed in a traditional manner while still supporting fluent operation when desired.
 
@@ -67,7 +68,7 @@ The cascading operator gives us the benefits of a fluent interface without the c
         ..addEventListener("click", e => {})
         ..appendChild(document.createElement("a")
             ..setAttribute("href", "http://example.com")
-            ..text = "Example"
+            ..textContent = "Example"
         )
 
 ## Prior Art
