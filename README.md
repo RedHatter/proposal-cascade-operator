@@ -1,5 +1,5 @@
 # Cascade operator proposal — native fluent interfaces
-The cascades operator `..` allows you to make a sequence of operations on the same object which can dramatically reduce boilerplate. The operator continues execution until the next cascade or the end of the statement then implicitly discards the result and evaluates to the callee.
+The cascade operator `..` allows you to make a sequence of operations on the same object which can dramatically reduce boilerplate. The operator continues execution until the next cascade or the end of the statement then implicitly discards the result and evaluates to the callee.
 
 This simplistic example
 
