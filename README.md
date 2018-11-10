@@ -75,7 +75,7 @@ The cascading operator gives us the benefits of a fluent interface without the c
 The following languages implement the operator with the same general semantics as this proposal.
 
 * Dart — [Cascade notation](https://www.dartlang.org/guides/language/language-tour#cascade-notation-)
-* Smalltalk — message cascades
+* Smalltalk — [message cascades](https://en.wikipedia.org/wiki/Method_cascading#Smalltalk)
 
 ## References
 * [original dart proposal](https://docs.google.com/document/d/1U0PeHtVQHMQ8usy7xI5Luo01W5LuWR1acN5odgu_Mtw/edit?pli=1#heading=h.tkyl552ayct9)
