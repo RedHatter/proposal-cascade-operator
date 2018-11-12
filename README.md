@@ -33,6 +33,8 @@ This would be equivalent to
     foo.a.b = c
     foo.d()
 
+The current proposal aims to allow the cascade operator any place a single dot `.` is allowed (member expression?). This would create a few situations where a cascade operator is legal but doesn't have any effect. Namely with primitives such as `42..toString()`.
+
 ## Babel implementation
 
 Here is a[ fork of babel](https://github.com/RedHatter/babel/tree/proposal-cascade-operator) with the cascade operator implemented. Note: The changes are on the `proposal-cascade-operator` branch.
