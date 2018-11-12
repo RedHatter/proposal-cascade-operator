@@ -21,6 +21,18 @@ Or more accurately (to prevent `foo` from being referenced multiple times)
         obj.d()
     })(foo)
 
+The cascade operator can also be nested as in the following example.
+
+    foo
+      ..a.b = (c..e())
+      ..d()
+
+This would be equivalent to
+
+    c.e()
+    foo.a.b = c
+    foo.d()
+
 ## Babel implementation
 
 Here is a[ fork of babel](https://github.com/RedHatter/babel/tree/proposal-cascade-operator) with the cascade operator implemented. Note: The changes are on the `proposal-cascade-operator` branch.
