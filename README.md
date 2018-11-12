@@ -1,13 +1,15 @@
 # Cascade operator proposal — native fluent interfaces
 The cascade operator `..` allows you to make a sequence of operations on the same object which can dramatically reduce boilerplate. The operator continues execution until the next cascade or the end of the statement then implicitly discards the result and evaluates to the callee.
 
-This simplistic example
+Take this simple example.
 
     foo
         ..a.b = c
         ..d()
 
-Would be equivalent to
+Both `a.b = c` and `d()` are applied to the root object, `foo` in this case. Note that `d()` is applied to `foo` not to `c`.
+
+This would be equivalent to
 
     foo.a.b = c
     foo.d()
